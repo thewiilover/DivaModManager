@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using DivaModManager.Core.Services;
+using DivaModManager.Core.Models;
 
 namespace DivaModManager
 {
@@ -13,32 +15,41 @@ namespace DivaModManager
         public DownloadWindow(GameBananaAPIV4 record)
         {
             InitializeComponent();
-            DownloadText.Text = $"{record.Title}\nSubmitted by {record.Owner.Name}";
-            var bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.UriSource = record.Image;
-            bitmap.EndInit();
-            Preview.Source = bitmap;
+            DownloadText.Text = $"{record.Title}\nSubmitted by {record.Owner?.Name}";
+            if (record.Image != null)
+            {
+                var bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = record.Image;
+                bitmap.EndInit();
+                Preview.Source = bitmap;
+            }
         }
         public DownloadWindow(GameBananaRecord record)
         {
             InitializeComponent();
-            DownloadText.Text = $"{record.Title}\nSubmitted by {record.Owner.Name}";
-            var bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.UriSource = record.Image;
-            bitmap.EndInit();
-            Preview.Source = bitmap;
+            DownloadText.Text = $"{record.Title}\nSubmitted by {record.Owner?.Name}";
+            if (record.Image != null)
+            {
+                var bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = record.Image;
+                bitmap.EndInit();
+                Preview.Source = bitmap;
+            }
         }
         public DownloadWindow(DivaModArchivePost post)
         {
             InitializeComponent();
-            DownloadText.Text = $"{post.Name}\nSubmitted by {post.Authors[0].Name}";
-            var bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.UriSource = post.Images[0];
-            bitmap.EndInit();
-            Preview.Source = bitmap;
+            DownloadText.Text = $"{post.Name}\nSubmitted by {post.Authors?[0].Name}";
+            if (post.Images?.Count > 0)
+            {
+                var bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = post.Images[0];
+                bitmap.EndInit();
+                Preview.Source = bitmap;
+            }
         }
         private void Yes_Click(object sender, RoutedEventArgs e)
         {

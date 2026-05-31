@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Octokit;
 using System.Reflection;
+using DivaModManager.Core.Services;
 
 namespace DivaModManager.UI
 {
@@ -42,9 +43,12 @@ namespace DivaModManager.UI
             VersionLabel.Content = $"Update: {update.Title} {update.Version}";
             Text.Text = text;
             // Format/Remove html tags
-            update.Text = update.Text.Replace("<br>", "\n").Replace("&nbsp;", " ");
-            UpdateText.Text = Regex.Replace(update.Text, "<.*?>", string.Empty);
-            if (UpdateText.Text.Length == 0)
+            if (update.Text != null)
+            {
+                update.Text = update.Text.Replace("<br>", "\n").Replace("&nbsp;", " ");
+                UpdateText.Text = Regex.Replace(update.Text, "<.*?>", string.Empty);
+            }
+            if (UpdateText.Text?.Length == 0)
                 UpdateText.Visibility = Visibility.Collapsed;
             if (skip)
                 SkipButton.Visibility = Visibility.Visible;
@@ -84,7 +88,7 @@ namespace DivaModManager.UI
             Text.Text = text;
             // Format/Remove html tags
             UpdateText.Text = release.Body;
-            if (UpdateText.Text.Length == 0)
+            if (UpdateText.Text?.Length == 0)
                 UpdateText.Visibility = Visibility.Collapsed;
             if (skip)
                 SkipButton.Visibility = Visibility.Visible;
@@ -98,7 +102,7 @@ namespace DivaModManager.UI
         public ChangelogBox(DivaModArchivePost post, string packageName, string text, bool skip = false, bool loader = false)
         {
             InitializeComponent();
-            if (post.Images[0] != null)
+            if (post?.Images?.Count > 0 && post.Images[0] != null)
             {
                 var bitmap = new BitmapImage();
                 bitmap.BeginInit();

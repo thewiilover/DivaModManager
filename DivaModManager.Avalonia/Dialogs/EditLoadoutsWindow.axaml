@@ -1,0 +1,48 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="DivaModManager.Avalonia.Dialogs.EditLoadoutsWindow"
+        Title="Edit Loadouts"
+        Width="600" Height="500"
+        Background="#202020"
+        Foreground="#f2f2f2"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False">
+  <Grid RowDefinitions="*,Auto" Margin="10">
+    <!-- Main content -->
+    <Grid RowDefinitions="Auto,*,Auto" ColumnDefinitions="*,Auto">
+      <!-- Header -->
+      <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Spacing="10">
+        <TextBlock Text="Loadouts:" FontSize="16" FontFamily="{StaticResource AnekLatin}" VerticalAlignment="Center" />
+        <ComboBox Name="LoadoutComboBox" Width="200" Height="35" FontFamily="{StaticResource AnekLatin}" FontSize="14" />
+        <Button Name="NewLoadoutButton" Content="New" Width="80" Height="35" Background="#181818" BorderBrush="#252525" Foreground="#f2f2f2" FontFamily="{StaticResource AnekLatin}" />
+        <Button Name="DeleteLoadoutButton" Content="Delete" Width="80" Height="35" Background="#181818" BorderBrush="#252525" Foreground="#f2f2f2" FontFamily="{StaticResource AnekLatin}" />
+      </StackPanel>
+
+      <!-- Mod list -->
+      <Border Grid.Row="1" Background="#1a1a1a" BorderBrush="#424242" BorderThickness="1" CornerRadius="5">
+        <ListBox Name="ModListBox" Background="Transparent" BorderThickness="0" Foreground="#f2f2f2" FontFamily="{StaticResource AnekLatin}">
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <StackPanel Orientation="Horizontal" Spacing="10" Margin="10,5">
+                <CheckBox IsChecked="{Binding enabled}" Foreground="#f2f2f2" />
+                <TextBlock Text="{Binding name}" VerticalAlignment="Center" />
+              </StackPanel>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+      </Border>
+
+      <!-- Buttons row -->
+      <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="10" Margin="0,10,0,0" HorizontalAlignment="Right">
+        <Button Name="ApplyButton" Content="Apply" Width="100" Height="35" Background="#181818" BorderBrush="#252525" Foreground="#f2f2f2" FontFamily="{StaticResource AnekLatin}" />
+        <Button Name="CancelButton" Content="Cancel" Width="100" Height="35" Background="#181818" BorderBrush="#252525" Foreground="#f2f2f2" FontFamily="{StaticResource AnekLatin}" />
+      </StackPanel>
+    </Grid>
+
+    <!-- Bottom buttons -->
+    <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right" Margin="0,10,0,0">
+      <Button Name="CloseButton" Content="Close" Width="100" Height="35" Background="#181818" BorderBrush="#252525" Foreground="#f2f2f2" FontFamily="{StaticResource AnekLatin}" />
+    </StackPanel>
+  </Grid>
+</Window>
+

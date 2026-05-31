@@ -1,0 +1,100 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="DivaModManager.Avalonia.Dialogs.SetupWindow"
+        Title="Setup Configuration"
+        Width="700" Height="600"
+        Background="#202020"
+        Foreground="#f2f2f2"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False">
+  <Grid RowDefinitions="*,Auto" Margin="15">
+    <!-- Main content with scrolling -->
+    <ScrollViewer>
+      <StackPanel Spacing="20" Margin="10">
+        <!-- Game Selection -->
+        <StackPanel Spacing="5">
+          <TextBlock Text="Game" FontSize="16" FontFamily="{StaticResource AnekLatin}" FontWeight="Bold" />
+          <ComboBox Name="GameComboBox" Height="35" FontFamily="{StaticResource AnekLatin}" FontSize="14" Background="#1a1a1a" Foreground="#f2f2f2" BorderBrush="#424242" Padding="10">
+            <ComboBoxItem>Project DIVA Mega Mix+</ComboBoxItem>
+            <ComboBoxItem>Hatsune Miku: Colorful Stage!</ComboBoxItem>
+            <ComboBoxItem>Other (Custom)</ComboBoxItem>
+          </ComboBox>
+        </StackPanel>
+
+        <!-- Game Path -->
+        <StackPanel Spacing="5">
+          <TextBlock Text="Game Executable Path" FontSize="16" FontFamily="{StaticResource AnekLatin}" FontWeight="Bold" />
+          <StackPanel Orientation="Horizontal" Spacing="10">
+            <TextBox Name="GamePathTextBox" 
+                     Height="35" 
+                     FontFamily="{StaticResource AnekLatin}" 
+                     FontSize="14" 
+                     Background="#1a1a1a" 
+                     Foreground="#f2f2f2" 
+                     BorderBrush="#424242"
+                     Padding="10"
+                     IsReadOnly="True"
+                     Width="500" />
+            <Button Name="BrowseGameButton" Content="Browse" Width="100" Height="35" Background="#181818" BorderBrush="#252525" Foreground="#f2f2f2" FontFamily="{StaticResource AnekLatin}" />
+          </StackPanel>
+          <TextBlock Text="Select the main game executable" FontSize="12" Foreground="#a0a0a0" FontStyle="Italic" />
+        </StackPanel>
+
+        <!-- Mods Folder -->
+        <StackPanel Spacing="5">
+          <TextBlock Text="Mods Folder Path" FontSize="16" FontFamily="{StaticResource AnekLatin}" FontWeight="Bold" />
+          <StackPanel Orientation="Horizontal" Spacing="10">
+            <TextBox Name="ModsFolderTextBox" 
+                     Height="35" 
+                     FontFamily="{StaticResource AnekLatin}" 
+                     FontSize="14" 
+                     Background="#1a1a1a" 
+                     Foreground="#f2f2f2" 
+                     BorderBrush="#424242"
+                     Padding="10"
+                     IsReadOnly="True"
+                     Width="500" />
+            <Button Name="BrowseModsButton" Content="Browse" Width="100" Height="35" Background="#181818" BorderBrush="#252525" Foreground="#f2f2f2" FontFamily="{StaticResource AnekLatin}" />
+          </StackPanel>
+          <TextBlock Text="Select the folder containing your mods" FontSize="12" Foreground="#a0a0a0" FontStyle="Italic" />
+        </StackPanel>
+
+        <!-- Mod Loader Version -->
+        <StackPanel Spacing="5">
+          <TextBlock Text="Mod Loader Version" FontSize="16" FontFamily="{StaticResource AnekLatin}" FontWeight="Bold" />
+          <TextBox Name="ModLoaderVersionTextBox" 
+                   Height="35" 
+                   FontFamily="{StaticResource AnekLatin}" 
+                   FontSize="14" 
+                   Background="#1a1a1a" 
+                   Foreground="#f2f2f2" 
+                   BorderBrush="#424242"
+                   Padding="10"
+                   Text="1.0.0" />
+          <TextBlock Text="Version of the mod loader in use" FontSize="12" Foreground="#a0a0a0" FontStyle="Italic" />
+        </StackPanel>
+
+        <!-- Default Loadout -->
+        <StackPanel Spacing="5">
+          <TextBlock Text="Default Loadout" FontSize="16" FontFamily="{StaticResource AnekLatin}" FontWeight="Bold" />
+          <ComboBox Name="DefaultLoadoutComboBox" Height="35" FontFamily="{StaticResource AnekLatin}" FontSize="14" Background="#1a1a1a" Foreground="#f2f2f2" BorderBrush="#424242" Padding="10" />
+        </StackPanel>
+
+        <!-- Status Message -->
+        <TextBlock Name="StatusTextBlock" 
+                   Text="" 
+                   Foreground="#a0a0a0" 
+                   FontSize="12" 
+                   FontStyle="Italic" 
+                   TextWrapping="Wrap"
+                   MinHeight="40" />
+      </StackPanel>
+    </ScrollViewer>
+
+    <!-- Bottom buttons -->
+    <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right" Margin="0,15,0,0">
+      <Button Name="SaveButton" Content="Save" Width="100" Height="35" Background="#181818" BorderBrush="#252525" Foreground="#f2f2f2" FontFamily="{StaticResource AnekLatin}" />
+      <Button Name="CancelButton" Content="Cancel" Width="100" Height="35" Background="#181818" BorderBrush="#252525" Foreground="#f2f2f2" FontFamily="{StaticResource AnekLatin}" />
+    </StackPanel>
+  </Grid>
+</Window>

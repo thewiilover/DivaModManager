@@ -1,0 +1,207 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:dg="clr-namespace:Avalonia.Controls;assembly=Avalonia.Controls.DataGrid"
+        xmlns:input="clr-namespace:Avalonia.Input;assembly=Avalonia.Base"
+        x:Class="DivaModManager.Avalonia.MainWindow"
+        Title="Diva Mod Manager"
+        Width="1280" Height="750" MinWidth="1125" MinHeight="750"
+        Background="#131313">
+  <Grid RowDefinitions="Auto,*">
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,6,10,0">
+      <StackPanel Orientation="Horizontal" Margin="0,0,10,0">
+        <TextBlock Text="Join the Discord!" FontSize="20" FontFamily="{StaticResource AnekLatin}" Foreground="#f2f2f2" />
+      </StackPanel>
+      <TextBlock Text="{Binding StatsText}" FontSize="20" FontFamily="{StaticResource AnekLatin}" Foreground="#f2f2f2" />
+    </StackPanel>
+
+    <TabControl Name="TabControl" Grid.Row="1" Background="#202020" BorderBrush="#353535">
+      <TabItem Header="Manage Mods">
+        <Grid RowDefinitions="Auto,*" Margin="10">
+          <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="10" Margin="0,0,0,10">
+            <ComboBox Name="GameComboBox" Height="35" Width="250" FontSize="20" FontFamily="{StaticResource AnekLatin}" ItemsSource="{Binding Games}" SelectedItem="{Binding SelectedGame}">
+            </ComboBox>
+            <ComboBox Name="LoadoutComboBox" Height="35" Width="150" FontSize="20" FontFamily="{StaticResource AnekLatin}" ItemsSource="{Binding Loadouts}" SelectedItem="{Binding SelectedLoadout}">
+            </ComboBox>
+            <Button Name="EditLoadoutsButton" Height="35" Background="#181818" BorderBrush="#252525" Click="EditLoadouts_Click">
+              <TextBlock Text="Edit Loadouts" Foreground="#f2f2f2" FontFamily="{StaticResource AnekLatin}" FontSize="20" />
+            </Button>
+            <Button Name="SetupButton" Height="35" Background="#181818" BorderBrush="#252525" Click="Setup_Click">
+              <TextBlock Text="Setup" Foreground="#f2f2f2" FontFamily="{StaticResource AnekLatin}" FontSize="20" />
+            </Button>
+            <Button Name="LaunchButton" Height="35" Background="#181818" BorderBrush="#252525" Foreground="#f2f2f2" FontSize="20" Click="Launch_Click">Launch</Button>
+            <ComboBox Name="LaunchMethodComboBox" Height="35" Width="150" FontSize="20" FontFamily="{StaticResource AnekLatin}" ItemsSource="{Binding LaunchMethods}" SelectedItem="{Binding SelectedLaunchMethod}">
+            </ComboBox>
+            <Button Name="CreateModButton" Height="35" Background="#181818" BorderBrush="#252525" Click="CreateMod_Click">
+              <TextBlock Text="Create Mod" Foreground="#f2f2f2" FontFamily="{StaticResource AnekLatin}" FontSize="20" />
+            </Button>
+            <Button Name="UpdateButton" Height="35" Background="#181818" BorderBrush="#252525" Click="Update_Click">
+              <TextBlock Text="Update" Foreground="#f2f2f2" FontFamily="{StaticResource AnekLatin}" FontSize="20" />
+            </Button>
+          </StackPanel>
+
+          <Grid Grid.Row="1" ColumnDefinitions="1.8*,Auto,*" RowDefinitions="*" Margin="0,10,0,10">
+            <dg:DataGrid Name="ModGrid"
+                         ItemsSource="{Binding Mods}"
+                         SelectedItem="{Binding SelectedMod}"
+                         AutoGenerateColumns="False"
+                         HeadersVisibility="Column"
+                         CanUserResizeColumns="False"
+                         GridLinesVisibility="None"
+                         RowBackground="#202020"
+                         Background="#202020"
+                         BorderBrush="#424242"
+                         Foreground="#f2f2f2"
+                         FontFamily="{StaticResource AnekLatin}"
+                         FontSize="15"
+                         input:DragDrop.AllowDrop="True">
+              <dg:DataGrid.ContextMenu>
+                <ContextMenu>
+                  <MenuItem Header="Configure Mod" Click="ConfigureMod_Click"/>
+                  <MenuItem Header="Rename Mod Folder" Click="RenameMod_Click"/>
+                  <MenuItem Header="Open Mod Folder" Click="OpenModFolder_Click"/>
+                  <MenuItem Header="Fetch Metadata" Click="FetchMetadata_Click"/>
+                  <MenuItem Header="Delete Mod" Click="DeleteMod_Click"/>
+                </ContextMenu>
+              </dg:DataGrid.ContextMenu>
+              <dg:DataGrid.Columns>
+                <dg:DataGridCheckBoxColumn Header="Enabled" Binding="{Binding enabled, Mode=TwoWay}" Width="90" />
+                <dg:DataGridTextColumn Header="Name" Binding="{Binding name}" Width="*" IsReadOnly="True" />
+              </dg:DataGrid.Columns>
+            </dg:DataGrid>
+
+            <GridSplitter Grid.Column="1" Width="10" Background="Transparent" />
+
+            <Grid Grid.Column="2" RowDefinitions="1.5*,*">
+              <Border Margin="10,0,0,10" Background="#202020" BorderBrush="#424242" BorderThickness="1">
+                <Image Stretch="Uniform" />
+              </Border>
+              <Border Grid.Row="1" Margin="10,0,0,0" Background="#202020" BorderBrush="#424242" BorderThickness="1">
+                <TextBlock Text="{Binding SelectedMod.name, TargetNullValue=Select a mod to view details}"
+                           TextWrapping="Wrap"
+                           FontFamily="{StaticResource AnekLatin}"
+                           Foreground="#f2f2f2"
+                           Margin="10" />
+              </Border>
+              <Image Source="avares://DivaModManager.Avalonia/Assets/load.gif" Width="90" Height="90" />
+            </Grid>
+          </Grid>
+
+        </Grid>
+      </TabItem>
+
+      <TabItem Header="GameBanana Mods">
+        <Grid RowDefinitions="Auto,Auto,*,Auto" Margin="10">
+          <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="10" Margin="0,0,0,10">
+            <TextBox Width="200" Watermark="Search..." Text="{Binding GameBananaSearchText}" VerticalContentAlignment="Center" />
+            <ComboBox SelectedIndex="{Binding SelectedGameBananaFilter}">
+              <ComboBoxItem>Featured</ComboBoxItem>
+              <ComboBoxItem>Recent</ComboBoxItem>
+              <ComboBoxItem>Popular</ComboBoxItem>
+            </ComboBox>
+            <ComboBox SelectedIndex="{Binding SelectedGameBananaType}">
+              <ComboBoxItem>Mods</ComboBoxItem>
+              <ComboBoxItem>WiPs</ComboBoxItem>
+              <ComboBoxItem>Sounds</ComboBoxItem>
+            </ComboBox>
+            <Button Content="Search" Click="GameBananaSearch_Click" Background="#181818" BorderBrush="#252525" Foreground="#f2f2f2" />
+          </StackPanel>
+
+          <TextBlock Grid.Row="1" Text="Loading..." Foreground="#f2f2f2" FontFamily="{StaticResource AnekLatin}" FontSize="16" 
+                     IsVisible="{Binding IsLoadingGameBanana}" HorizontalAlignment="Center" Margin="0,5,0,10" />
+          <TextBlock Grid.Row="1" Text="{Binding GameBananaError}" Foreground="#f2f2f2" FontFamily="{StaticResource AnekLatin}" FontSize="14" 
+                     TextWrapping="Wrap" Margin="0,5,0,10" />
+          
+          <ScrollViewer Grid.Row="2">
+            <ItemsControl ItemsSource="{Binding GameBananaMods}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <WrapPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <Border CornerRadius="5" Margin="5" Background="#1a1a1a" BorderBrush="#424242" BorderThickness="1" Width="200">
+                    <StackPanel Margin="10" Spacing="5">
+                      <StackPanel Spacing="5">
+                        <TextBlock Text="{Binding Title}" FontFamily="{StaticResource AnekLatin}" Foreground="#f2f2f2" 
+                                   TextWrapping="Wrap" MaxHeight="40" FontSize="14" FontWeight="Bold" />
+                        <Image Source="{Binding Image}" Height="120" Stretch="UniformToFill" />
+                      </StackPanel>
+                      <TextBlock Text="{Binding Description}" FontFamily="{StaticResource AnekLatin}" Foreground="#d0d0d0" 
+                                 TextWrapping="Wrap" MaxHeight="60" FontSize="12" TextTrimming="CharacterEllipsis" />
+                      <StackPanel Orientation="Horizontal" Spacing="5">
+                        <Button Content="More Info" Click="MoreInfo_Click" Foreground="#f2f2f2" FontFamily="{StaticResource AnekLatin}" 
+                                Background="#181818" BorderBrush="#252525" Height="30" Width="85" />
+                        <Button Content="Install" Click="InstallGameBanana_Click" Foreground="#f2f2f2" FontFamily="{StaticResource AnekLatin}" 
+                                Background="#181818" BorderBrush="#252525" Height="30" Width="85" />
+                      </StackPanel>
+                    </StackPanel>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </ScrollViewer>
+          
+          <TextBlock Grid.Row="3" Text="No mods loaded yet. Select this tab to load GameBanana mods." 
+                     Foreground="#808080" FontFamily="{StaticResource AnekLatin}" FontSize="12" Margin="0,10,0,0" />
+        </Grid>
+      </TabItem>
+
+      <TabItem Header="DMA Mods">
+        <Grid RowDefinitions="Auto,Auto,*,Auto" Margin="10">
+          <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="10" Margin="0,0,0,10">
+            <TextBox Width="200" Watermark="Search..." Text="{Binding DMASearchText}" VerticalContentAlignment="Center" />
+            <ComboBox SelectedIndex="{Binding SelectedDMASort}">
+              <ComboBoxItem>Latest</ComboBoxItem>
+              <ComboBoxItem>Oldest</ComboBoxItem>
+              <ComboBoxItem>A-Z</ComboBoxItem>
+              <ComboBoxItem>Z-A</ComboBoxItem>
+            </ComboBox>
+            <Button Content="Search" Click="DMASearch_Click" Background="#181818" BorderBrush="#252525" Foreground="#f2f2f2" />
+          </StackPanel>
+
+          <TextBlock Grid.Row="1" Text="Loading..." Foreground="#f2f2f2" FontFamily="{StaticResource AnekLatin}" FontSize="16" 
+                     IsVisible="{Binding IsLoadingDMA}" HorizontalAlignment="Center" Margin="0,5,0,10" />
+          <TextBlock Grid.Row="1" Text="{Binding DMAError}" Foreground="#f2f2f2" FontFamily="{StaticResource AnekLatin}" FontSize="14" 
+                     TextWrapping="Wrap" Margin="0,5,0,10" />
+          
+          <ScrollViewer Grid.Row="2">
+            <ItemsControl ItemsSource="{Binding DMAPosts}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <WrapPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <Border CornerRadius="5" Margin="5" Background="#1a1a1a" BorderBrush="#424242" BorderThickness="1" Width="200">
+                    <StackPanel Margin="10" Spacing="5">
+                      <StackPanel Spacing="5">
+                        <TextBlock Text="{Binding Name}" FontFamily="{StaticResource AnekLatin}" Foreground="#f2f2f2" 
+                                   TextWrapping="Wrap" MaxHeight="40" FontSize="14" FontWeight="Bold" />
+                        <Image Source="{Binding Images[0]}" Height="120" Stretch="UniformToFill" />
+                      </StackPanel>
+                      <TextBlock Text="{Binding Text}" FontFamily="{StaticResource AnekLatin}" Foreground="#d0d0d0" 
+                                 TextWrapping="Wrap" MaxHeight="60" FontSize="12" TextTrimming="CharacterEllipsis" />
+                      <TextBlock Text="{Binding PostType}" FontFamily="{StaticResource AnekLatin}" Foreground="#a0a0a0" FontSize="11" />
+                      <Button Content="Install" Click="InstallDMA_Click" Foreground="#f2f2f2" FontFamily="{StaticResource AnekLatin}" 
+                              Background="#181818" BorderBrush="#252525" Height="30" />
+                    </StackPanel>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </ScrollViewer>
+          
+          <TextBlock Grid.Row="3" Text="No mods loaded yet. Select this tab to load DMA mods." 
+                     Foreground="#808080" FontFamily="{StaticResource AnekLatin}" FontSize="12" Margin="0,10,0,0" />
+        </Grid>
+      </TabItem>
+    </TabControl>
+  </Grid>
+</Window>
+
+
+
+
+

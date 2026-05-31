@@ -1,18 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using Microsoft.Win32;
-using System.Media;
+using DivaModManager.Core.Models;
 
 namespace DivaModManager.UI
 {
@@ -34,20 +24,23 @@ namespace DivaModManager.UI
         {
             InitializeComponent();
             List<DMAFileDownload> files = new List<DMAFileDownload>();
-            for (int i = 0; i < post.Files.Count; i++)
+            if (post?.Files != null && post.FileNames != null)
             {
-                files.Add(new DMAFileDownload { FileName = post.FileNames[i], FileUrl = post.Files[i] });
+                for (int i = 0; i < post.Files.Count; i++)
+                {
+                    files.Add(new DMAFileDownload { FileName = post.FileNames[i], FileUrl = post.Files[i] });
+                }
             }
             FileList.ItemsSource = files;
-            TitleBox.Text = post.Name;
+            TitleBox.Text = post?.Name;
         }
 
         private void SelectButton_Click(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
             var item = button.DataContext as DMAFileDownload;
-            chosenFileUrl = item.FileUrl;
-            chosenFileName = item.FileName;
+            chosenFileUrl = item?.FileUrl;
+            chosenFileName = item?.FileName;
             Close();
         }
 
